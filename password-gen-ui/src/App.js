@@ -1,11 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import PasswordGenerator from "./Components/PasswordGenerator/PasswordGenerator";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      
+      <PasswordGenerator />
     </div>
   );
 }
