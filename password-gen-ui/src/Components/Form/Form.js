@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NumberOfWords from "./NumberOfWords/NumberOfWords";
+import Paper from "@material-ui/core/Paper";
 import "./Form.css";
 
 class Form extends Component {
@@ -20,7 +21,13 @@ class Form extends Component {
   render() {
     return (
       <div id="password-gen-form">
-        <NumberOfWords defaultValue={3} onChange={this.setNumberOfWords} />
+        <Paper className="form-paper">
+          <NumberOfWords
+            defaultValue={3}
+            onChange={this.setNumberOfWords}
+            className="form-element"
+          />
+        </Paper>
       </div>
     );
   }

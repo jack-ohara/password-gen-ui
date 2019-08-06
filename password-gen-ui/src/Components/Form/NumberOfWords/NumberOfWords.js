@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import Slider from "@material-ui/core/Slider";
 import Input from "@material-ui/core/Input";
 import Grid from "@material-ui/core/Grid";
+import "./NumberOfWords.css";
 
 class NumberOfWords extends Component {
   constructor(props) {
@@ -40,43 +40,39 @@ class NumberOfWords extends Component {
 
   render() {
     return (
-      <div id="password-gen-form">
-        <Paper>
-          <div className="number-of-words">
-            <Typography gutterBottom>Number Of Words</Typography>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs>
-                <Slider
-                  value={
-                    typeof this.state.numberOfWordsVal === "number"
-                      ? this.state.numberOfWordsVal
-                      : 0
-                  }
-                  onChange={this.handleSliderChange}
-                  aria-labelledby="input-slider"
-                  min={1}
-                  max={5}
-                  defaultValue={this.props.defaultValue}
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  value={this.state.numberOfWordsVal}
-                  margin="dense"
-                  onChange={this.handleInputChange}
-                  onBlur={this.handleBlur}
-                  inputProps={{
-                    step: 1,
-                    min: 1,
-                    max: 5,
-                    type: "number",
-                    "aria-labelledby": "input-slider"
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </div>
-        </Paper>
+      <div id="number-of-words" className={this.props.className}>
+        <Typography gutterBottom>Number Of Words</Typography>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs>
+            <Slider
+              value={
+                typeof this.state.numberOfWordsVal === "number"
+                  ? this.state.numberOfWordsVal
+                  : 0
+              }
+              onChange={this.handleSliderChange}
+              aria-labelledby="input-slider"
+              min={1}
+              max={5}
+              defaultValue={this.props.defaultValue}
+            />
+          </Grid>
+          <Grid item>
+            <Input
+              value={this.state.numberOfWordsVal}
+              margin="dense"
+              onChange={this.handleInputChange}
+              onBlur={this.handleBlur}
+              inputProps={{
+                step: 1,
+                min: 1,
+                max: 5,
+                type: "number",
+                "aria-labelledby": "input-slider"
+              }}
+            />
+          </Grid>
+        </Grid>
       </div>
     );
   }
