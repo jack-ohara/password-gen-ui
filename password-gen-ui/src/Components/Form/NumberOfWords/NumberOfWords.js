@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-import Input from "@material-ui/core/Input";
 import Grid from "@material-ui/core/Grid";
-import "./NumberOfWords.css";
 
 class NumberOfWords extends Component {
   constructor(props) {
@@ -38,6 +36,14 @@ class NumberOfWords extends Component {
     }
   };
 
+  marks = [
+    { value: 1, label: "1" },
+    { value: 2, label: "" },
+    { value: 3, label: "" },
+    { value: 4, label: "" },
+    { value: 5, label: "5" }
+  ];
+
   render() {
     return (
       <div id="number-of-words" className={this.props.className}>
@@ -55,21 +61,9 @@ class NumberOfWords extends Component {
               min={1}
               max={5}
               defaultValue={this.props.defaultValue}
-            />
-          </Grid>
-          <Grid item>
-            <Input
-              value={this.state.numberOfWordsVal}
-              margin="dense"
-              onChange={this.handleInputChange}
-              onBlur={this.handleBlur}
-              inputProps={{
-                step: 1,
-                min: 1,
-                max: 5,
-                type: "number",
-                "aria-labelledby": "input-slider"
-              }}
+              valueLabelDisplay="auto"
+              placement
+              marks={this.marks}
             />
           </Grid>
         </Grid>

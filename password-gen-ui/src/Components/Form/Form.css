@@ -9,10 +9,11 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  margin: auto;
 }
 
 #password-gen-form .form-paper {
-  padding: 2em 1em;
+  padding: 2em 10%;
 }
 
 #password-gen-form .form-element {
