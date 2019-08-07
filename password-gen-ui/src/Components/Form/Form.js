@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NumberOfWords from "./NumberOfWords/NumberOfWords";
 import MinMaxLength from "./MinMaxLength/MinMaxLength";
+import CaseSelect from "./CaseSelect/CaseSelect";
 import Paper from "@material-ui/core/Paper";
 import "./Form.css";
 
@@ -11,7 +12,8 @@ class Form extends Component {
     this.state = {
       numberOfWordsVal: 3,
       minLength: 15,
-      maxLength: 40
+      maxLength: 40,
+      selectedCase: "titleCase"
     };
   }
 
@@ -25,6 +27,12 @@ class Form extends Component {
     this.setState({
       minLength: newValues[0],
       maxLength: newValues[1]
+    });
+  };
+
+  setCase = newValue => {
+    this.setState({
+      selectedCase: newValue
     });
   };
 
@@ -45,6 +53,8 @@ class Form extends Component {
             defaultValues={[15, 40]}
             onChange={this.setMinMaxLengths}
           />
+
+          <CaseSelect onChange={this.setCase} defaultValue={"titleCase"} />
         </Paper>
       </div>
     );
