@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NumberOfWords from "./NumberOfWords/NumberOfWords";
 import MinMaxLength from "./MinMaxLength/MinMaxLength";
 import CaseSelect from "./CaseSelect/CaseSelect";
+import IncludeNumbers from "./IncludeNumbers/IncludeNumbers";
 import Paper from "@material-ui/core/Paper";
 import "./Form.css";
 
@@ -55,6 +56,8 @@ class Form extends Component {
           />
 
           <CaseSelect onChange={this.setCase} defaultValue={"titleCase"} />
+
+          <IncludeNumbers />
         </Paper>
       </div>
     );

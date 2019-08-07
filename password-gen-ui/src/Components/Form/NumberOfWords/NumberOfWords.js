@@ -62,7 +62,6 @@ class NumberOfWords extends Component {
               max={5}
               defaultValue={this.props.defaultValue}
               valueLabelDisplay="auto"
-              placement
               marks={this.marks}
             />
           </Grid>
