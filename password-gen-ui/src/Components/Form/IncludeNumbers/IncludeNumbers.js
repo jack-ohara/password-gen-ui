@@ -20,53 +20,53 @@ class IncludeNumbers extends Component {
   }
 
   handleIncludeNumbersChange = event => {
-    console.log("Entered");
     const newValue = event.target.checked;
-    console.log("event.target.checked = " + event.target.checked);
-    console.log("newValue = " + newValue);
 
     this.props.onIncludeNumbersChange(newValue);
-
-    console.log("setting inner state");
 
     this.setState({
       includeNumbersChecked: newValue
     });
 
     if (newValue) {
-      console.log("Setting number options back");
-      // this.changeNumberOption(
-      //   "numberAtStart",
-      //   this.state.numberAtStartBeforeHide
-      // );
-      // this.changeNumberOption(
-      //   "numbersBetweenWords",
-      //   this.state.numbersBetweenWordsBeforeHide
-      // );
-      // this.changeNumberOption("numberAtEnd", this.state.numberAtEndBeforeHide);
+      this.setNumAtEnd(this.state.numberAtEndBeforeHide);
+      this.setNumAtStart(this.state.numberAtStartBeforeHide);
+      this.setNumBetweenWords(this.state.numbersBetweenWordsBeforeHide);
     } else {
-      console.log("Settings number options to false");
-      // this.setState({
-      //   numberAtStartBeforeHide: this.state.numberAtStart,
-      //   numbersBetweenWordsBeforeHide: this.state.numbersBetweenWords,
-      //   numberAtEndBeforeHide: this.state.numberAtEnd
-      // });
+      this.setState({
+        numberAtEndBeforeHide: this.state.numberAtEnd,
+        numberAtStartBeforeHide: this.state.numberAtStart,
+        numbersBetweenWordsBeforeHide: this.state.numbersBetweenWords
+      });
 
-      // this.changeNumberOption("numberAtStart", false);
-      // this.changeNumberOption("numbersBetweenWords", false);
-      // this.changeNumberOption("numberAtEnd", false);
+      this.setNumAtEnd(false);
+      this.setNumAtStart(false);
+      this.setNumBetweenWords(false);
     }
   };
 
-  handleChange = name => event => {
-    this.changeNumberOption(name, event.target.checked);
+  setNumAtStart = newValue => {
+    this.props.onNumAtStartChange(newValue);
+
+    this.setState({
+      numberAtStart: newValue
+    });
   };
 
-  changeNumberOption = (name, newValue) => {
-    console.log("Setting " + name + " to " + newValue);
-    this.props.onNumberOptionsChange(name, newValue);
+  setNumAtEnd = newValue => {
+    this.props.onNumAtEndChange(newValue);
 
-    this.setState({ ...this.state, [name]: newValue });
+    this.setState({
+      numberAtEnd: newValue
+    });
+  };
+
+  setNumBetweenWords = newValue => {
+    this.props.onNumBetweenWordsChange(newValue);
+
+    this.setState({
+      numbersBetweenWords: newValue
+    });
   };
 
   render() {
@@ -79,7 +79,7 @@ class IncludeNumbers extends Component {
             control={
               <Checkbox
                 checked={this.state.numberAtStart}
-                onChange={this.handleChange("numberAtStart")}
+                onChange={event => this.setNumAtStart(event.target.checked)}
                 value="numberAtStart"
               />
             }
@@ -89,7 +89,9 @@ class IncludeNumbers extends Component {
             control={
               <Checkbox
                 checked={this.state.numbersBetweenWords}
-                onChange={this.handleChange("numbersBetweenWords")}
+                onChange={event =>
+                  this.setNumBetweenWords(event.target.checked)
+                }
                 value="numbersBetweenWords"
               />
             }
@@ -99,7 +101,7 @@ class IncludeNumbers extends Component {
             control={
               <Checkbox
                 checked={this.state.numberAtEnd}
-                onChange={this.handleChange("numberAtEnd")}
+                onChange={event => this.setNumAtEnd(event.target.checked)}
                 value="numberAtEnd"
               />
             }

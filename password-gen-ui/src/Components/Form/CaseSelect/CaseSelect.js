@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InputLabel from "@material-ui/core/InputLabel";
+import Typography from "@material-ui/core/Typography";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import "./CaseSelect.css";
@@ -24,7 +24,7 @@ class CaseSelect extends Component {
   render() {
     return (
       <div id="case-select">
-        <InputLabel htmlFor="case-select">Password Case</InputLabel>
+        <Typography gutterBottom>Password Case</Typography>
         <Select
           value={this.state.selectedCase}
           onChange={this.handleChange}

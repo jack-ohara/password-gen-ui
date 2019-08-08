@@ -54,6 +54,24 @@ class Form extends Component {
     this.setState({ ...this.state, [name]: newValue });
   };
 
+  setNumAtStart = newValue => {
+    this.setState({
+      numberAtStart: newValue
+    });
+  };
+
+  setNumAtEnd = newValue => {
+    this.setState({
+      numberAtEnd: newValue
+    });
+  };
+
+  setNumBetweenWords = newValue => {
+    this.setState({
+      numbersBetweenWords: newValue
+    });
+  };
+
   render() {
     return (
       <div id="password-gen-form">
@@ -83,7 +101,9 @@ class Form extends Component {
 
             <IncludeNumbers
               onIncludeNumbersChange={this.setIncludeNumbers}
-              onNumberOptionsChange={this.setNumberOptions}
+              onNumAtStartChange={this.setNumAtStart}
+              onNumAtEndChange={this.setNumAtEnd}
+              onNumBetweenWordsChange={this.setNumBetweenWords}
             />
           </div>
         </Paper>
