@@ -3,6 +3,7 @@ import NumberOfWords from "./NumberOfWords/NumberOfWords";
 import MinMaxLength from "./MinMaxLength/MinMaxLength";
 import CaseSelect from "./CaseSelect/CaseSelect";
 import IncludeNumbers from "./IncludeNumbers/IncludeNumbers";
+import SeparateWords from "./SeperateWords/SerparateWords";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import "./Form.css";
@@ -19,7 +20,8 @@ class Form extends Component {
       includeNumbers: true,
       numberAtStart: false,
       numbersBetweenWords: false,
-      numberAtEnd: true
+      numberAtEnd: true,
+      separatorCharacters: "_"
     };
   }
 
@@ -43,11 +45,9 @@ class Form extends Component {
   };
 
   setIncludeNumbers = newValue => {
-    console.log("setting " + newValue + " in the form");
     this.setState({
       includeNumbers: newValue
     });
-    console.log("form set");
   };
 
   setNumberOptions = (name, newValue) => {
@@ -69,6 +69,12 @@ class Form extends Component {
   setNumBetweenWords = newValue => {
     this.setState({
       numbersBetweenWords: newValue
+    });
+  };
+
+  setSeparatorCharacters = newValue => {
+    this.setState({
+      separatorCharacters: newValue
     });
   };
 
@@ -105,6 +111,8 @@ class Form extends Component {
               onNumAtEndChange={this.setNumAtEnd}
               onNumBetweenWordsChange={this.setNumBetweenWords}
             />
+
+            <SeparateWords onSeparatorsChange={this.setSeparatorCharacters} />
           </div>
         </Paper>
       </div>

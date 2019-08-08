@@ -1,0 +1,12 @@
+#separate-words .separate-words-label {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#separate-words #separator-characters-area {
+  margin: 0 1em;
+}
+
+#separate-words .separator-characters {
+  display: block;
+}
