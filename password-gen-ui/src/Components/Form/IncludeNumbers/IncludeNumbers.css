@@ -1,0 +1,9 @@
+#include-numbers .include-numbers-label {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0.4em;
+}
+
+#include-numbers .number-options {
+  margin-left: 1em;
+}

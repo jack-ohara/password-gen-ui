@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "../Form/Form";
 import "./PasswordGenerator.css";
 
 export default function PasswordGenerator() {
@@ -8,7 +9,9 @@ export default function PasswordGenerator() {
         <h1>PasswordGenerator</h1>
       </header>
       <div className="layout-container">
-        <div className="form-area">Your options...</div>
+        <div className="form-area">
+          <Form />
+        </div>
         <div className="result-area">Your password...</div>
       </div>
     </div>
