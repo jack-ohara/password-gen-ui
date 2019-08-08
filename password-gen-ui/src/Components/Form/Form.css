@@ -1,3 +1,5 @@
+@import "../../variables.css";
+
 #password-gen-form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12,8 +14,15 @@
   margin: auto;
 }
 
-#password-gen-form .form-paper {
-  padding: 2em 10%;
+#password-gen-form .form-paper .form-options {
+  padding: 5% 10%;
+}
+
+#password-gen-form .form-header {
+  padding: 0.8em 1em;
+  background: var(--material-ui-primary-blue);
+  border-radius: 4px 4px 0 0;
+  text-align: center;
 }
 
 #password-gen-form .form-element {

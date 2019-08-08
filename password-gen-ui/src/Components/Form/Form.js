@@ -4,6 +4,7 @@ import MinMaxLength from "./MinMaxLength/MinMaxLength";
 import CaseSelect from "./CaseSelect/CaseSelect";
 import IncludeNumbers from "./IncludeNumbers/IncludeNumbers";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import "./Form.css";
 
 class Form extends Component {
@@ -14,7 +15,11 @@ class Form extends Component {
       numberOfWordsVal: 3,
       minLength: 15,
       maxLength: 40,
-      selectedCase: "titleCase"
+      selectedCase: "titleCase",
+      includeNumbers: true,
+      numberAtStart: false,
+      numbersBetweenWords: false,
+      numberAtEnd: true
     };
   }
 
@@ -37,27 +42,50 @@ class Form extends Component {
     });
   };
 
+  setIncludeNumbers = newValue => {
+    console.log("setting " + newValue + " in the form");
+    this.setState({
+      includeNumbers: newValue
+    });
+    console.log("form set");
+  };
+
+  setNumberOptions = (name, newValue) => {
+    this.setState({ ...this.state, [name]: newValue });
+  };
+
   render() {
     return (
       <div id="password-gen-form">
         <Paper className="form-paper">
-          <NumberOfWords
-            defaultValue={3}
-            onChange={this.setNumberOfWords}
-            className="form-element"
-          />
+          <div className="form-header">
+            <Typography variant="h5" color="textPrimary">
+              Customise
+            </Typography>
+          </div>
 
-          <MinMaxLength
-            className="form-element"
-            min={0}
-            max={40}
-            defaultValues={[15, 40]}
-            onChange={this.setMinMaxLengths}
-          />
+          <div className="form-options">
+            <NumberOfWords
+              defaultValue={3}
+              onChange={this.setNumberOfWords}
+              className="form-element"
+            />
 
-          <CaseSelect onChange={this.setCase} defaultValue={"titleCase"} />
+            <MinMaxLength
+              className="form-element"
+              min={0}
+              max={40}
+              defaultValues={[15, 40]}
+              onChange={this.setMinMaxLengths}
+            />
 
-          <IncludeNumbers />
+            <CaseSelect onChange={this.setCase} defaultValue={"titleCase"} />
+
+            <IncludeNumbers
+              onIncludeNumbersChange={this.setIncludeNumbers}
+              onNumberOptionsChange={this.setNumberOptions}
+            />
+          </div>
         </Paper>
       </div>
     );
