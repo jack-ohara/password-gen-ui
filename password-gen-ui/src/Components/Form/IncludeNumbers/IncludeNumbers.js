@@ -70,49 +70,6 @@ class IncludeNumbers extends Component {
   };
 
   render() {
-    let numberOptions;
-
-    if (this.state.includeNumbersChecked) {
-      numberOptions = (
-        <div className="number-options">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.numberAtStart}
-                onChange={event => this.setNumAtStart(event.target.checked)}
-                value="numberAtStart"
-              />
-            }
-            label="Number At Start"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.numbersBetweenWords}
-                onChange={event =>
-                  this.setNumBetweenWords(event.target.checked)
-                }
-                value="numbersBetweenWords"
-              />
-            }
-            label="Numbers Between Words"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.numberAtEnd}
-                onChange={event => this.setNumAtEnd(event.target.checked)}
-                value="numberAtEnd"
-              />
-            }
-            label="Number At End"
-          />
-        </div>
-      );
-    } else {
-      numberOptions = <div />;
-    }
-
     return (
       <div id="include-numbers">
         <FormControlLabel
@@ -130,7 +87,43 @@ class IncludeNumbers extends Component {
           className="include-numbers-label"
         />
 
-        {numberOptions}
+        <div className="number-options">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.numberAtStart}
+                onChange={event => this.setNumAtStart(event.target.checked)}
+                value="numberAtStart"
+                disabled={!this.state.includeNumbersChecked}
+              />
+            }
+            label="Number At Start"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.numbersBetweenWords}
+                onChange={event =>
+                  this.setNumBetweenWords(event.target.checked)
+                }
+                value="numbersBetweenWords"
+                disabled={!this.state.includeNumbersChecked}
+              />
+            }
+            label="Numbers Between Words"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.numberAtEnd}
+                onChange={event => this.setNumAtEnd(event.target.checked)}
+                value="numberAtEnd"
+                disabled={!this.state.includeNumbersChecked}
+              />
+            }
+            label="Number At End"
+          />
+        </div>
       </div>
     );
   }
