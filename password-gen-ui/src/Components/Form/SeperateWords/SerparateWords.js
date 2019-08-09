@@ -9,8 +9,8 @@ export default class SeparateWords extends Component {
     super(props);
 
     this.state = {
-      separateWords: true,
-      separators: "_",
+      separateWords: this.props.separateWordsDefault,
+      separators: this.props.separatorCharactersDefault,
       oldSeparators: ""
     };
   }

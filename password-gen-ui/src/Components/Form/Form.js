@@ -6,28 +6,49 @@ import IncludeNumbers from "./IncludeNumbers/IncludeNumbers";
 import SeparateWords from "./SeperateWords/SerparateWords";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import "./Form.css";
 
 class Form extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      numberOfWordsVal: 3,
+    this.defaults = {
+      numberOfWords: 3,
       minLength: 15,
       maxLength: 40,
       selectedCase: "titleCase",
       includeNumbers: true,
-      numberAtStart: false,
-      numbersBetweenWords: false,
-      numberAtEnd: true,
-      separatorCharacters: "_"
+      get numberAtStart() {
+        return false && this.includeNumbers;
+      },
+      get numbersBetweenWords() {
+        return false && this.includeNumber;
+      },
+      get numberAtEnd() {
+        return true && this.includeNumbers;
+      },
+      separateWords: true,
+      get separatorCharacters() {
+        return this.separateWords ? "_" : "";
+      }
+    };
+
+    this.state = {
+      numberOfWords: this.defaults.numberOfWords,
+      minLength: this.defaults.minLength,
+      maxLength: this.defaults.maxLength,
+      selectedCase: this.defaults.selectedCase,
+      numberAtStart: this.defaults.numberAtStart,
+      numbersBetweenWords: this.defaults.numbersBetweenWords,
+      numberAtEnd: this.defaults.numberAtEnd,
+      separatorCharacters: this.defaults.separatorCharacters
     };
   }
 
   setNumberOfWords = newValue => {
     this.setState({
-      numberOfWordsVal: newValue
+      numberOfWords: newValue
     });
   };
 
@@ -41,12 +62,6 @@ class Form extends Component {
   setCase = newValue => {
     this.setState({
       selectedCase: newValue
-    });
-  };
-
-  setIncludeNumbers = newValue => {
-    this.setState({
-      includeNumbers: newValue
     });
   };
 
@@ -90,7 +105,7 @@ class Form extends Component {
 
           <div className="form-options">
             <NumberOfWords
-              defaultValue={3}
+              defaultValue={this.defaults.numberOfWords}
               onChange={this.setNumberOfWords}
               className="form-element"
             />
@@ -99,20 +114,39 @@ class Form extends Component {
               className="form-element"
               min={0}
               max={40}
-              defaultValues={[15, 40]}
+              defaultValues={[this.defaults.minLength, this.defaults.maxLength]}
               onChange={this.setMinMaxLengths}
             />
 
-            <CaseSelect onChange={this.setCase} defaultValue={"titleCase"} />
+            <CaseSelect
+              onChange={this.setCase}
+              defaultValue={this.defaults.selectedCase}
+            />
 
             <IncludeNumbers
-              onIncludeNumbersChange={this.setIncludeNumbers}
               onNumAtStartChange={this.setNumAtStart}
               onNumAtEndChange={this.setNumAtEnd}
               onNumBetweenWordsChange={this.setNumBetweenWords}
+              includeNumbersDefault={this.defaults.includeNumbers}
+              numberAtStartDefault={this.defaults.numberAtStart}
+              numberAtEndDefault={this.defaults.numberAtEnd}
+              numbersBetweenWordsDefault={this.defaults.numbersBetweenWords}
             />
 
-            <SeparateWords onSeparatorsChange={this.setSeparatorCharacters} />
+            <SeparateWords
+              onSeparatorsChange={this.setSeparatorCharacters}
+              separateWordsDefault={this.defaults.separateWords}
+              separatorCharactersDefault={this.defaults.separatorCharacters}
+            />
+          </div>
+
+          <div className="form-buttons">
+            <Button variant="contained" color="secondary">
+              Reset Options
+            </Button>
+            <Button variant="contained" color="primary">
+              Generate
+            </Button>
           </div>
         </Paper>
       </div>

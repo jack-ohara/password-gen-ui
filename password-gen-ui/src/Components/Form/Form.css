@@ -28,3 +28,10 @@
 #password-gen-form .form-element {
   margin: auto;
 }
+
+#password-gen-form .form-buttons {
+  margin: 0 auto 1em auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
