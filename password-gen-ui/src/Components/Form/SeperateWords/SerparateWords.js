@@ -40,6 +40,10 @@ export default class SeparateWords extends Component {
       });
     }
 
+    this.setSeparateWords(newValue);
+  };
+
+  setSeparateWords = newValue => {
     this.setState({
       separateWords: newValue
     });

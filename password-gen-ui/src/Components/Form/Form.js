@@ -38,12 +38,18 @@ class Form extends Component {
       numberOfWords: this.defaults.numberOfWords,
       minLength: this.defaults.minLength,
       maxLength: this.defaults.maxLength,
-      selectedCase: this.defaults.selectedCase,
+      caseType: this.defaults.selectedCase,
       numberAtStart: this.defaults.numberAtStart,
       numbersBetweenWords: this.defaults.numbersBetweenWords,
       numberAtEnd: this.defaults.numberAtEnd,
       separatorCharacters: this.defaults.separatorCharacters
     };
+
+    this.numberOfWordsRef = React.createRef();
+    this.minMaxLengthRef = React.createRef();
+    this.caseSelectRef = React.createRef();
+    this.includeNumbersRef = React.createRef();
+    this.separateWordsRef = React.createRef();
   }
 
   setNumberOfWords = newValue => {
@@ -61,7 +67,7 @@ class Form extends Component {
 
   setCase = newValue => {
     this.setState({
-      selectedCase: newValue
+      caseType: newValue
     });
   };
 
@@ -93,6 +99,48 @@ class Form extends Component {
     });
   };
 
+  resetAllOptionsToDefaults = () => {
+    this.numberOfWordsRef.current.setValue(this.defaults.numberOfWords);
+    this.minMaxLengthRef.current.setMinMaxValues([
+      this.defaults.minLength,
+      this.defaults.maxLength
+    ]);
+    this.caseSelectRef.current.setNewValue(this.defaults.selectedCase);
+    this.includeNumbersRef.current.setNumAtStart(this.defaults.numberAtStart);
+    this.includeNumbersRef.current.setNumAtEnd(this.defaults.numberAtEnd);
+    this.includeNumbersRef.current.setNumBetweenWords(
+      this.defaults.numbersBetweenWords
+    );
+    this.includeNumbersRef.current.setIncludeNumbers(
+      this.defaults.includeNumbers
+    );
+    this.separateWordsRef.current.separatorCharactersChanged(
+      this.defaults.separatorCharacters
+    );
+    this.separateWordsRef.current.setSeparateWords(this.defaults.separateWords);
+  };
+
+  submitFormAndGeneratePassword = () => {
+    const formJson = JSON.stringify(this.state);
+
+    fetch(
+      "https://passwordgenazurefunc20190705072629.azurewebsites.net/api/generatePassword",
+      {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: formJson
+      }
+    )
+      .then(response => response.json())
+      .then(data => console.log(data));
+
+    console.log(formJson);
+  };
+
   render() {
     return (
       <div id="password-gen-form">
@@ -108,6 +156,7 @@ class Form extends Component {
               defaultValue={this.defaults.numberOfWords}
               onChange={this.setNumberOfWords}
               className="form-element"
+              ref={this.numberOfWordsRef}
             />
 
             <MinMaxLength
@@ -116,11 +165,13 @@ class Form extends Component {
               max={40}
               defaultValues={[this.defaults.minLength, this.defaults.maxLength]}
               onChange={this.setMinMaxLengths}
+              ref={this.minMaxLengthRef}
             />
 
             <CaseSelect
               onChange={this.setCase}
               defaultValue={this.defaults.selectedCase}
+              ref={this.caseSelectRef}
             />
 
             <IncludeNumbers
@@ -131,20 +182,28 @@ class Form extends Component {
               numberAtStartDefault={this.defaults.numberAtStart}
               numberAtEndDefault={this.defaults.numberAtEnd}
               numbersBetweenWordsDefault={this.defaults.numbersBetweenWords}
+              ref={this.includeNumbersRef}
             />
 
             <SeparateWords
               onSeparatorsChange={this.setSeparatorCharacters}
               separateWordsDefault={this.defaults.separateWords}
               separatorCharactersDefault={this.defaults.separatorCharacters}
+              ref={this.separateWordsRef}
             />
           </div>
 
           <div className="form-buttons">
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.resetAllOptionsToDefaults}>
               Reset Options
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.submitFormAndGeneratePassword}>
               Generate
             </Button>
           </div>
