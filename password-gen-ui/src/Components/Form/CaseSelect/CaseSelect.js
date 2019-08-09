@@ -14,10 +14,14 @@ class CaseSelect extends Component {
   }
 
   handleChange = event => {
-    this.props.onChange(event.target.value);
+    this.setNewValue(event.target.value);
+  };
+
+  setNewValue = newValue => {
+    this.props.onChange(newValue);
 
     this.setState({
-      selectedCase: event.target.value
+      selectedCase: newValue
     });
   };
 

@@ -6,28 +6,55 @@ import IncludeNumbers from "./IncludeNumbers/IncludeNumbers";
 import SeparateWords from "./SeperateWords/SerparateWords";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import "./Form.css";
 
 class Form extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      numberOfWordsVal: 3,
+    this.defaults = {
+      numberOfWords: 3,
       minLength: 15,
       maxLength: 40,
       selectedCase: "titleCase",
       includeNumbers: true,
-      numberAtStart: false,
-      numbersBetweenWords: false,
-      numberAtEnd: true,
-      separatorCharacters: "_"
+      get numberAtStart() {
+        return false && this.includeNumbers;
+      },
+      get numbersBetweenWords() {
+        return false && this.includeNumber;
+      },
+      get numberAtEnd() {
+        return true && this.includeNumbers;
+      },
+      separateWords: true,
+      get separatorCharacters() {
+        return this.separateWords ? "_" : "";
+      }
     };
+
+    this.state = {
+      numberOfWords: this.defaults.numberOfWords,
+      minLength: this.defaults.minLength,
+      maxLength: this.defaults.maxLength,
+      caseType: this.defaults.selectedCase,
+      numberAtStart: this.defaults.numberAtStart,
+      numbersBetweenWords: this.defaults.numbersBetweenWords,
+      numberAtEnd: this.defaults.numberAtEnd,
+      separatorCharacters: this.defaults.separatorCharacters
+    };
+
+    this.numberOfWordsRef = React.createRef();
+    this.minMaxLengthRef = React.createRef();
+    this.caseSelectRef = React.createRef();
+    this.includeNumbersRef = React.createRef();
+    this.separateWordsRef = React.createRef();
   }
 
   setNumberOfWords = newValue => {
     this.setState({
-      numberOfWordsVal: newValue
+      numberOfWords: newValue
     });
   };
 
@@ -40,13 +67,7 @@ class Form extends Component {
 
   setCase = newValue => {
     this.setState({
-      selectedCase: newValue
-    });
-  };
-
-  setIncludeNumbers = newValue => {
-    this.setState({
-      includeNumbers: newValue
+      caseType: newValue
     });
   };
 
@@ -78,6 +99,48 @@ class Form extends Component {
     });
   };
 
+  resetAllOptionsToDefaults = () => {
+    this.numberOfWordsRef.current.setValue(this.defaults.numberOfWords);
+    this.minMaxLengthRef.current.setMinMaxValues([
+      this.defaults.minLength,
+      this.defaults.maxLength
+    ]);
+    this.caseSelectRef.current.setNewValue(this.defaults.selectedCase);
+    this.includeNumbersRef.current.setNumAtStart(this.defaults.numberAtStart);
+    this.includeNumbersRef.current.setNumAtEnd(this.defaults.numberAtEnd);
+    this.includeNumbersRef.current.setNumBetweenWords(
+      this.defaults.numbersBetweenWords
+    );
+    this.includeNumbersRef.current.setIncludeNumbers(
+      this.defaults.includeNumbers
+    );
+    this.separateWordsRef.current.separatorCharactersChanged(
+      this.defaults.separatorCharacters
+    );
+    this.separateWordsRef.current.setSeparateWords(this.defaults.separateWords);
+  };
+
+  submitFormAndGeneratePassword = () => {
+    const formJson = JSON.stringify(this.state);
+
+    fetch(
+      "https://passwordgenazurefunc20190705072629.azurewebsites.net/api/generatePassword",
+      {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: formJson
+      }
+    )
+      .then(response => response.json())
+      .then(data => console.log(data));
+
+    console.log(formJson);
+  };
+
   render() {
     return (
       <div id="password-gen-form">
@@ -90,29 +153,59 @@ class Form extends Component {
 
           <div className="form-options">
             <NumberOfWords
-              defaultValue={3}
+              defaultValue={this.defaults.numberOfWords}
               onChange={this.setNumberOfWords}
               className="form-element"
+              ref={this.numberOfWordsRef}
             />
 
             <MinMaxLength
               className="form-element"
               min={0}
               max={40}
-              defaultValues={[15, 40]}
+              defaultValues={[this.defaults.minLength, this.defaults.maxLength]}
               onChange={this.setMinMaxLengths}
+              ref={this.minMaxLengthRef}
             />
 
-            <CaseSelect onChange={this.setCase} defaultValue={"titleCase"} />
+            <CaseSelect
+              onChange={this.setCase}
+              defaultValue={this.defaults.selectedCase}
+              ref={this.caseSelectRef}
+            />
 
             <IncludeNumbers
-              onIncludeNumbersChange={this.setIncludeNumbers}
               onNumAtStartChange={this.setNumAtStart}
               onNumAtEndChange={this.setNumAtEnd}
               onNumBetweenWordsChange={this.setNumBetweenWords}
+              includeNumbersDefault={this.defaults.includeNumbers}
+              numberAtStartDefault={this.defaults.numberAtStart}
+              numberAtEndDefault={this.defaults.numberAtEnd}
+              numbersBetweenWordsDefault={this.defaults.numbersBetweenWords}
+              ref={this.includeNumbersRef}
             />
 
-            <SeparateWords onSeparatorsChange={this.setSeparatorCharacters} />
+            <SeparateWords
+              onSeparatorsChange={this.setSeparatorCharacters}
+              separateWordsDefault={this.defaults.separateWords}
+              separatorCharactersDefault={this.defaults.separatorCharacters}
+              ref={this.separateWordsRef}
+            />
+          </div>
+
+          <div className="form-buttons">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.resetAllOptionsToDefaults}>
+              Reset Options
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.submitFormAndGeneratePassword}>
+              Generate
+            </Button>
           </div>
         </Paper>
       </div>

@@ -9,10 +9,10 @@ class IncludeNumbers extends Component {
     super(props);
 
     this.state = {
-      includeNumbersChecked: true,
-      numberAtStart: false,
-      numbersBetweenWords: false,
-      numberAtEnd: true,
+      includeNumbersChecked: this.props.includeNumbersDefault,
+      numberAtStart: this.props.numberAtStartDefault,
+      numbersBetweenWords: this.props.numbersBetweenWordsDefault,
+      numberAtEnd: this.props.numberAtEndDefault,
       numberAtStartBeforeHide: false,
       numbersBetweenWordsBeforeHide: false,
       numberAtEndBeforeHide: false
@@ -22,11 +22,7 @@ class IncludeNumbers extends Component {
   handleIncludeNumbersChange = event => {
     const newValue = event.target.checked;
 
-    this.props.onIncludeNumbersChange(newValue);
-
-    this.setState({
-      includeNumbersChecked: newValue
-    });
+    this.setIncludeNumbers(newValue);
 
     if (newValue) {
       this.setNumAtEnd(this.state.numberAtEndBeforeHide);
@@ -43,6 +39,12 @@ class IncludeNumbers extends Component {
       this.setNumAtStart(false);
       this.setNumBetweenWords(false);
     }
+  };
+
+  setIncludeNumbers = newValue => {
+    this.setState({
+      includeNumbersChecked: newValue
+    });
   };
 
   setNumAtStart = newValue => {

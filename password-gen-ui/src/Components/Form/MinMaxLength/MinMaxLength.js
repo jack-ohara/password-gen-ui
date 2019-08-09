@@ -7,12 +7,16 @@ class MinMaxLength extends Component {
     super(props);
 
     this.state = {
-      minValue: this.props.min,
-      maxValue: this.props.max
+      minValue: this.props.defaultValues[0],
+      maxValue: this.props.defaultValues[1]
     };
   }
 
   handleChange = (event, newValues) => {
+    this.setMinMaxValues(newValues);
+  };
+
+  setMinMaxValues = newValues => {
     this.props.onChange(newValues);
 
     this.setState({
@@ -35,6 +39,7 @@ class MinMaxLength extends Component {
           aria-labelledby="min-max-length-range"
           min={this.props.min}
           max={this.props.max}
+          value={[this.state.minValue, this.state.maxValue]}
         />
       </div>
     );
