@@ -4,6 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { isNull } from "util";
 import "./PasswordResult.css";
@@ -15,11 +17,7 @@ export default function PasswordResult(props) {
 
   const passwordAreaRef = React.createRef();
 
-  const copyPassword = () => {
-    console.log(passwordAreaRef.current);
-    passwordAreaRef.current.select();
-    document.execCommand("copy");
-  };
+  const [copiedMessageOpen, setCopiedMessage] = React.useState(false);
 
   return (
     <Zoom in={!isNull(props.password)}>
@@ -31,9 +29,18 @@ export default function PasswordResult(props) {
           <Button className="clear-button" onClick={clearPassword}>
             Clear
           </Button>
-          <CopyToClipboard text={props.password}>
+          <CopyToClipboard
+            text={props.password}
+            onCopy={() => setCopiedMessage(true)}>
             <Button className="copy-button">Copy To Clipboard</Button>
           </CopyToClipboard>
+          <Dialog
+            open={copiedMessageOpen}
+            onClose={() => setCopiedMessage(false)}>
+            <DialogTitle className="copied-text">
+              Password successfully copied to clipboard
+            </DialogTitle>
+          </Dialog>
         </ButtonGroup>
       </Paper>
     </Zoom>
