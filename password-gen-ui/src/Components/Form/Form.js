@@ -7,6 +7,7 @@ import SeparateWords from "./SeperateWords/SerparateWords";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import "./Form.css";
 
 class Form extends Component {
@@ -121,6 +122,8 @@ class Form extends Component {
   };
 
   submitFormAndGeneratePassword = () => {
+    this.props.setPasswordResult(null);
+
     const formJson = JSON.stringify(this.state);
 
     fetch(
@@ -135,10 +138,8 @@ class Form extends Component {
         body: formJson
       }
     )
-      .then(response => response.json())
-      .then(data => console.log(data));
-
-    console.log(formJson);
+      .then(response => response.text())
+      .then(text => this.props.setPasswordResult(JSON.parse(text).result));
   };
 
   render() {
@@ -194,18 +195,20 @@ class Form extends Component {
           </div>
 
           <div className="form-buttons">
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.resetAllOptionsToDefaults}>
-              Reset Options
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.submitFormAndGeneratePassword}>
-              Generate
-            </Button>
+            <ButtonGroup fullWidth>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.resetAllOptionsToDefaults}>
+                Reset Options
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.submitFormAndGeneratePassword}>
+                Generate
+              </Button>
+            </ButtonGroup>
           </div>
         </Paper>
       </div>
