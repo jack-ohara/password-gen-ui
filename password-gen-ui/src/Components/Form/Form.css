@@ -30,8 +30,20 @@
 }
 
 #password-gen-form .form-buttons {
-  margin: 0 auto 1em auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+#password-gen-form .form-buttons button:first-of-type {
+  border-radius: 0 0 0 4px;
+  border-left: 0;
+  color: var(--material-ui-secondary-pink);
+}
+
+#password-gen-form .form-buttons button:last-of-type {
+  border-radius: 0 0 4px 0;
+  border-right: 0;
+  color: var(--material-ui-primary-blue);
 }
