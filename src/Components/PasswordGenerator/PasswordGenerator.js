@@ -9,7 +9,7 @@ export default function PasswordGenerator() {
   return (
     <div className="password-generator">
       <header>
-        <h1>PasswordGenerator</h1>
+        <h1>Memorable Password Generator</h1>
       </header>
       <div className="layout-container">
         <div className="form-area">
